@@ -10,7 +10,7 @@ variable container_version {
     default = "latest"
 }
 
-variable containter_port {
+variable container_port {
     type = number
     default = 8080
 }
@@ -37,14 +37,24 @@ variable replicas {
     description = "Number of containers to run"
 }
 
-variable cpu_request {
+variable limit_cpu {
+    type = string 
+    default = "1"
+}
+
+variable limit_memory {
+    type = string
+    default = "2G"
+}
+
+variable request_cpu {
     type = string 
     default = "0.5"
 }
 
-variable cpu_memory {
+variable request_memory {
     type = string
-    default = "128Mi"
+    default = "512M"
 }
 
 variable liveness_probe_path {
@@ -80,4 +90,14 @@ variable volume_claim_name {
 variable liveness_delay {
     type = number
     default = 60
+}
+
+variable stdin {
+    type = bool
+    default = false
+}
+
+variable tty {
+    type = bool
+    default = false
 }
