@@ -1,103 +1,85 @@
 
-variable container_name {
-    type = string
-    description = "Name of the container to be used"
+variable "container_name" {
+  type        = string
+  description = "Name of the container to be used"
 }
 
-variable container_version {
-    type = string
-    description = "Version number ( or latest if unset ) to be used"
-    default = "latest"
+variable "container_version" {
+  type        = string
+  description = "Version number ( or latest if unset ) to be used"
+  default     = "latest"
 }
 
-variable container_port {
-    type = number
-    default = 8080
+variable "container_port" {
+  type    = number
+  default = 8080
 }
 
-variable name {
-    type = string
-    description = "Name of this deployment"
+variable "name" {
+  type        = string
+  description = "Name of this deployment"
 }
 
-variable namespace {
-    type = string
-    description = "Namespace to host the containers"
+variable "namespace" {
+  type        = string
+  description = "Namespace to host the containers"
 }
 
-variable deployment_labels {
-    type = map
-    default = {}
-    description = "Labels to put on the deployment itself"
+variable "deployment_labels" {
+  type        = map(any)
+  default     = {}
+  description = "Labels to put on the deployment itself"
 }
 
-variable replicas {
-    type = number
-    default = 1
-    description = "Number of containers to run"
+variable "replicas" {
+  type        = number
+  default     = 1
+  description = "Number of containers to run"
 }
 
-variable limit_cpu {
-    type = string 
-    default = "1"
+variable "limit_cpu" {
+  type    = string
+  default = "1"
 }
 
-variable limit_memory {
-    type = string
-    default = "2G"
+variable "limit_memory" {
+  type    = string
+  default = "2G"
 }
 
-variable request_cpu {
-    type = string 
-    default = "0.5"
+variable "request_cpu" {
+  type    = string
+  default = "0.5"
 }
 
-variable request_memory {
-    type = string
-    default = "512M"
+variable "request_memory" {
+  type    = string
+  default = "512M"
 }
 
-variable liveness_probe_path {
-    type = string
-    default = "/alive"
+variable "liveness" {
+  type = list(object( { 
+    http_path=string
+    http_port=string
+    delay=number 
+  }))
+  default = []
 }
 
-variable liveness_probe_port {
-    type = string
-    default = 8080
+variable "nfs_volumes" {
+  type = map(object({  
+    mount_path=string, 
+    claim=string
+    }))
+  default = {}
 }
 
-variable liveness_header_value {
-    type = string
-    default = "6ed23aa2771449c4b0c59e7105f6b62c"
+variable "stdin" {
+  type    = bool
+  default = false
 }
 
-variable volume_mount_path {
-    type = string
-    default = ""
-}
-
-variable volume_mount_name {
-    type = string
-    default = ""
-}
-
-variable volume_claim_name {
-    type = string
-    default = ""
-}
-
-variable liveness_delay {
-    type = number
-    default = 60
-}
-
-variable stdin {
-    type = bool
-    default = false
-}
-
-variable tty {
-    type = bool
-    default = false
+variable "tty" {
+  type    = bool
+  default = false
 }
