@@ -17,7 +17,7 @@ variable "container_port" {
 
 variable "service_port" {
   type    = number
-  default = 0
+  default = 2680
 }
 
 variable "name" {
