@@ -15,6 +15,11 @@ variable "container_port" {
   default = 8080
 }
 
+variable "service_port" {
+  type    = number
+  default = 0
+}
+
 variable "name" {
   type        = string
   description = "Name of this deployment"
@@ -58,19 +63,19 @@ variable "request_memory" {
 }
 
 variable "liveness" {
-  type = list(object( { 
-    http_path=string
-    http_port=string
-    delay=number 
+  type = list(object({
+    http_path = string
+    http_port = string
+    delay     = number
   }))
   default = []
 }
 
 variable "nfs_volumes" {
-  type = map(object({  
-    mount_path=string, 
-    claim=string
-    }))
+  type = map(object({
+    mount_path = string,
+    claim      = string
+  }))
   default = {}
 }
 

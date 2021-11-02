@@ -45,7 +45,7 @@ variable "request_memory" {
 }
 
 variable "nfs_capacity" {
-  type = string
+  type    = string
   default = "10Gi"
 }
 
@@ -57,7 +57,12 @@ variable "nfs_path" {
   type = string
 }
 
+variable "service_port" {
+  type    = number
+  default = 0
+}
+
 variable "arm" {
-  type = bool
+  type    = bool
   default = false
 }

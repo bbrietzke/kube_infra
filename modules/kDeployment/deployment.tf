@@ -42,7 +42,7 @@ resource "kubernetes_deployment" "deployment" {
             for_each = { for l in var.liveness : l.http_path => l }
             content {
               initial_delay_seconds = 10
-              period_seconds = liveness_probe.value["delay"]
+              period_seconds        = liveness_probe.value["delay"]
 
               http_get {
                 path = liveness_probe.value["http_path"]
@@ -56,8 +56,8 @@ resource "kubernetes_deployment" "deployment" {
 
             content {
               mount_path = volume_mount.value["mount_path"]
-              name = volume_mount.key
-              read_only = false
+              name       = volume_mount.key
+              read_only  = false
             }
           }
         }
@@ -68,9 +68,9 @@ resource "kubernetes_deployment" "deployment" {
           content {
             name = volume.key
             persistent_volume_claim {
-                claim_name = volume.value["claim"]
-                read_only = false
-            } 
+              claim_name = volume.value["claim"]
+              read_only  = false
+            }
           }
         }
       }
