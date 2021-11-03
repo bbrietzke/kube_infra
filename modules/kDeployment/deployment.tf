@@ -25,6 +25,7 @@ resource "kubernetes_deployment" "deployment" {
 
           port {
             container_port = var.container_port
+            host_port      = var.container_port
           }
 
           resources {
@@ -39,11 +40,28 @@ resource "kubernetes_deployment" "deployment" {
             }
           }
 
+          dynamic "startup_probe" {
+            for_each = { for l in var.startup : l.http_path => l }
+
+            content {
+              initial_delay_seconds = 30
+              period_seconds        = startup_probe.value["period_seconds"]
+              failure_threshold     = startup_probe.value["failure_threshold"]
+
+              http_get {
+                path = startup_probe.value["http_path"]
+                port = startup_probe.value["http_port"]
+              }
+
+            }
+          }
+
           dynamic "liveness_probe" {
             for_each = { for l in var.liveness : l.http_path => l }
             content {
               initial_delay_seconds = 10
-              period_seconds        = liveness_probe.value["delay"]
+              period_seconds        = liveness_probe.value["period_seconds"]
+              failure_threshold     = liveness_probe.value["failure_threshold"]
 
               http_get {
                 path = liveness_probe.value["http_path"]

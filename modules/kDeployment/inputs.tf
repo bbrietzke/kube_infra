@@ -21,7 +21,7 @@ variable "service_port" {
 }
 
 variable "service_account" {
-  type = string
+  type    = string
   default = "default"
 }
 
@@ -69,9 +69,20 @@ variable "request_memory" {
 
 variable "liveness" {
   type = list(object({
-    http_path = string
-    http_port = string
-    delay     = number
+    http_path         = string
+    http_port         = string
+    period_seconds             = number
+    failure_threshold = number
+  }))
+  default = []
+}
+
+variable "startup" {
+  type = list(object({
+    http_path         = string
+    http_port         = string
+    period_seconds             = number
+    failure_threshold = number
   }))
   default = []
 }

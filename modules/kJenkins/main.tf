@@ -30,6 +30,13 @@ module "jenkins_deployment" {
   request_cpu       = var.request_cpu
   request_memory    = var.request_memory
   service_port      = var.service_port
+  startup = [{
+    failure_threshold = 100
+    period_seconds = 5
+    http_path = "/login"
+    http_port = 8080
+
+  }]
   nfs_volumes = {
     "jenkins-volume" = {
       mount_path = "/var/jenkins_home"
