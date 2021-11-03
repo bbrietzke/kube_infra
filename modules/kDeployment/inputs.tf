@@ -20,6 +20,11 @@ variable "service_port" {
   default = 2680
 }
 
+variable "service_account" {
+  type = string
+  default = "default"
+}
+
 variable "name" {
   type        = string
   description = "Name of this deployment"

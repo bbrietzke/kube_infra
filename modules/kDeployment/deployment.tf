@@ -15,6 +15,7 @@ resource "kubernetes_deployment" "deployment" {
         labels = merge(local.static_labels, var.deployment_labels)
       }
       spec {
+        service_account_name = var.service_account
         container {
           image = "${var.container_name}:${var.container_version}"
           name  = var.name

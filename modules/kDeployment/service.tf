@@ -12,7 +12,7 @@ resource "kubernetes_service" "service" {
     }
 
     port {
-        name =  var.name
+      name        = var.name
       port        = var.container_port
       target_port = var.container_port
       node_port   = local.service_port
