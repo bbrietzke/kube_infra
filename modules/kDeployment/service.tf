@@ -11,11 +11,15 @@ resource "kubernetes_service" "service" {
       app = var.name
     }
 
-    port {
-      name        = var.name
-      port        = var.container_port
-      target_port = var.container_port
-      node_port   = local.service_port
+    dynamic "port" {
+      for_each = { for p in var.ports : p.name => p }
+
+      content {
+        name        = port.key
+        port        = port.value["port"]
+        target_port = port.value["port"]
+        node_port   = port.value["service_port"]
+      }
     }
 
     type             = local.service_type

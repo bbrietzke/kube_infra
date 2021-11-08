@@ -16,6 +16,7 @@ resource "kubernetes_deployment" "deployment" {
       }
       spec {
         service_account_name = var.service_account
+
         container {
           image = "${var.container_name}:${var.container_version}"
           name  = var.name
@@ -23,9 +24,14 @@ resource "kubernetes_deployment" "deployment" {
           stdin = var.stdin
           tty   = var.tty
 
-          port {
-            container_port = var.container_port
-            host_port      = var.container_port
+          dynamic "port" {
+            for_each = { for p in var.ports : p.name => p }
+
+            content {
+              name = port.key
+              container_port = port.value["port"]
+              host_port = port.value["port"]
+            }
           }
 
           resources {

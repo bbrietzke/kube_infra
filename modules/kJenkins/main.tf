@@ -23,18 +23,25 @@ module "jenkins_deployment" {
   name              = var.name
   replicas          = local.replicas
   container_name    = local.container_name
-  container_port    = local.container_port
   container_version = var.container_version
   limit_cpu         = var.limit_cpu
   limit_memory      = var.limit_memory
   request_cpu       = var.request_cpu
   request_memory    = var.request_memory
-  service_port      = var.service_port
+  ports = [{
+    name = "http"
+    port = 8080
+    service_port = 32680
+  }, {
+    name = "jnlp"
+    port = 49187
+    service_port = 32697
+  }]
   startup = [{
     failure_threshold = 100
-    period_seconds = 5
-    http_path = "/login"
-    http_port = 8080
+    period_seconds    = 5
+    http_path         = "/login"
+    http_port         = 8080
 
   }]
   nfs_volumes = {

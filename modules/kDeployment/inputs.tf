@@ -10,14 +10,9 @@ variable "container_version" {
   default     = "latest"
 }
 
-variable "container_port" {
-  type    = number
-  default = 8080
-}
-
-variable "service_port" {
-  type    = number
-  default = 2680
+variable "ports" {
+  type = list(object({ name = string, port = number, service_port = number }))
+  default = []
 }
 
 variable "service_account" {
@@ -36,7 +31,7 @@ variable "namespace" {
 }
 
 variable "deployment_labels" {
-  type        = map(any)
+  type        = map
   default     = {}
   description = "Labels to put on the deployment itself"
 }
@@ -71,7 +66,7 @@ variable "liveness" {
   type = list(object({
     http_path         = string
     http_port         = string
-    period_seconds             = number
+    period_seconds    = number
     failure_threshold = number
   }))
   default = []
@@ -81,7 +76,7 @@ variable "startup" {
   type = list(object({
     http_path         = string
     http_port         = string
-    period_seconds             = number
+    period_seconds    = number
     failure_threshold = number
   }))
   default = []

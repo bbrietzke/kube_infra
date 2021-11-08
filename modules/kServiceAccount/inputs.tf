@@ -17,7 +17,7 @@ variable "namespace" {
 }
 
 variable "deployment_labels" {
-  type        = map(any)
+  type        = map
   default     = {}
   description = "Labels to put on the deployment itself"
 }
