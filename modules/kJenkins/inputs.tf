@@ -57,11 +57,6 @@ variable "nfs_path" {
   type = string
 }
 
-variable "service_port" {
-  type    = number
-  default = 0
-}
-
 variable "arm" {
   type    = bool
   default = false
